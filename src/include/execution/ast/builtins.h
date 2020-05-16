@@ -245,6 +245,7 @@ namespace terrier::execution::ast {
                                                                         \
   /* String functions */                                                \
   F(Lower, lower)
+  F(Position, position)
 
 /**
  * Enum of builtins
