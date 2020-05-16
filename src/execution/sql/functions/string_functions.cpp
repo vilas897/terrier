@@ -377,7 +377,7 @@ void StringFunctions::Position(exec::ExecutionContext *ctx, Integer *pos, const 
   auto it =
       std::search(search_str_view.begin(), search_str_view.end(), search_sub_str_view.begin(),
                   search_sub_str_view.end(), [](char ch1, char ch2) { return std::toupper(ch1) == std::toupper(ch2); });
-  auto found = (it - search_str_view.begin());
+  size_t found = (it - search_str_view.begin());
 
   if (found == search_str_view.length()) {
     *pos = Integer(0);
