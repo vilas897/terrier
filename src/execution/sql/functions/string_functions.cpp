@@ -361,10 +361,10 @@ void StringFunctions::Right(UNUSED_ATTRIBUTE exec::ExecutionContext *ctx, String
   } else {
     *result = StringVal(str.Content() + len, str.len_ - len);
   }
-
 }
 
-void StringFunctions::Position(exec::ExecutionContext *ctx, Integer *pos, const StringVal &search_str, const StringVal &search_sub_str) {
+void StringFunctions::Position(exec::ExecutionContext *ctx, Integer *pos, const StringVal &search_str,
+                               const StringVal &search_sub_str) {
   if (search_str.is_null_ || search_sub_str.is_null_) {
     *pos = Integer::Null();
     return;
@@ -374,8 +374,10 @@ void StringFunctions::Position(exec::ExecutionContext *ctx, Integer *pos, const 
   auto search_sub_str_view = std::string(search_sub_str.StringView());
 
   // Postgres performs a case insensitive search for Position()
-  std::transform(search_sub_str_view.begin(), search_sub_str_view.end(), search_sub_str_view.begin(), [](unsigned char c){ return std::tolower(c); });
-  std::transform(search_str_view.begin(), search_str_view.end(), search_str_view.begin(), [](unsigned char c){ return std::tolower(c); });
+  std::transform(search_sub_str_view.begin(), search_sub_str_view.end(), search_sub_str_view.begin(),
+                 [](unsigned char c) { return std::tolower(c); });
+  std::transform(search_str_view.begin(), search_str_view.end(), search_str_view.begin(),
+                 [](unsigned char c) { return std::tolower(c); });
 
   std::size_t found = search_str_view.find(search_sub_str_view);
 

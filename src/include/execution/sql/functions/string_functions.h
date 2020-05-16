@@ -126,7 +126,8 @@ class EXPORT StringFunctions {
   /**
    * Finds the first matching position of a substring in a string
    */
-   static void Position(exec::ExecutionContext *ctx, Integer *pos, const StringVal &search_str, const StringVal &search_sub_str);
+  static void Position(exec::ExecutionContext *ctx, Integer *pos, const StringVal &search_str,
+                       const StringVal &search_sub_str);
 };
 
 }  // namespace terrier::execution::sql
