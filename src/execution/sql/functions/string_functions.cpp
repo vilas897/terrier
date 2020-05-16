@@ -361,6 +361,22 @@ void StringFunctions::Right(UNUSED_ATTRIBUTE exec::ExecutionContext *ctx, String
   } else {
     *result = StringVal(str.Content() + len, str.len_ - len);
   }
+
 }
 
+void StringFunctions::Position(exec::ExecutionContext *ctx, Integer *pos, const StringVal &search_str, const StringVal &search_sub_str) {
+  if (search_str.is_null_ || search_sub_str.is_null_) {
+    *pos = Integer::Null();
+  }
+
+  auto search_str_view = search_str.StringView();
+  auto search_sub_str_view = search_sub_str.StringView();
+  std::size_t found = search_str_view.find(search_sub_str_view);
+
+  if (found != std::string::npos) {
+    *pos = Integer(found + 1);
+  } else {
+    *pos = Integer(0);
+  }
+}
 }  // namespace terrier::execution::sql
