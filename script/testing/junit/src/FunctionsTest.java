@@ -177,6 +177,7 @@ public class FunctionsTest extends TestUtility {
     public void testPosition() throws SQLException {
         checkStringPositionFunc("position", "bC", "str_a_val", false, 2);
         checkStringPositionFunc("position", "bc", "str_a_val", false, 2);
+        checkStringPositionFunc("position", "aa", "str_a_val", false, 0);
         checkStringPositionFunc("position", "bC", "str_a_val", true, null);
     }
 }
