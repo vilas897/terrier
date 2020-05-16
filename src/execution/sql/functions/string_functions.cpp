@@ -367,10 +367,16 @@ void StringFunctions::Right(UNUSED_ATTRIBUTE exec::ExecutionContext *ctx, String
 void StringFunctions::Position(exec::ExecutionContext *ctx, Integer *pos, const StringVal &search_str, const StringVal &search_sub_str) {
   if (search_str.is_null_ || search_sub_str.is_null_) {
     *pos = Integer::Null();
+    return;
   }
 
-  auto search_str_view = search_str.StringView();
-  auto search_sub_str_view = search_sub_str.StringView();
+  auto search_str_view = std::string(search_str.StringView());
+  auto search_sub_str_view = std::string(search_sub_str.StringView());
+
+  // Postgres performs a case insensitive search for Position()
+  std::transform(search_sub_str_view.begin(), search_sub_str_view.end(), search_sub_str_view.begin(), [](unsigned char c){ return std::tolower(c); });
+  std::transform(search_str_view.begin(), search_str_view.end(), search_str_view.begin(), [](unsigned char c){ return std::tolower(c); });
+
   std::size_t found = search_str_view.find(search_sub_str_view);
 
   if (found != std::string::npos) {

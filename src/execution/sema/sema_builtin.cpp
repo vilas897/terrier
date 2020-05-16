@@ -2642,6 +2642,10 @@ void Sema::CheckBuiltinCall(ast::CallExpr *call) {
       CheckBuiltinStringCall(call, builtin);
       break;
     }
+    case ast::Builtin::Position: {
+      CheckBuiltinStringCall(call, builtin);
+      break;
+    }
     default: {
       UNREACHABLE("Unhandled builtin!");
     }
